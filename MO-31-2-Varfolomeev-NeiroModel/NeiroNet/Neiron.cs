@@ -1,41 +1,42 @@
-﻿using MO_31_2_Varfolomeev_NeiroModel.NeiroNet;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using static System.Math;
 
-namespace MO_31_1_Varfolomeev_NeiroModel.NeiroNet
+namespace MO_31_2_Varfolomeev_NeiroModel.NeiroNet
 {
     class Neiron
     {
-        private NeironType type; //Тип нейрона
-        private double[] weights; //его веса
-        private double[] inputs; //его входы
-        private double output; //его выходы
-        private double derivative; //производнаяя
-        private double previousSoftmaxValue; // сохранение суммы до применения softMax
+        private NeironType type; // тип нейрона
+        private double[] weights; // его веса
+        private double[] inputs; // его входы
+        private double output; // его выходы
+        private double derivative; // производнаяя
+        //private double previousSoftmaxValue; // сохранение суммы до применения softMax
 
-        private double a = 0.01d; // Константы для функкции активации
+        private double a = 0.01d; // константы для функкции активации
 
-        private List<Neiron> outputNeirons;
-        private bool flagSoftMax = false; // флаг для повторных проходов
+        //private List<Neiron> outputNeirons;
+        //private bool flagSoftMax = false; // флаг для повторных проходов
 
-        //свойства
+        // свойства
         public double[] Weights { get => weights; set => weights = value; }
         public double[] Inputs { get => inputs; set => inputs = value; }
         public double Output { get => output; }
         public double Derivative { get => derivative; }
-        public double PreviousSoftmaxValue { get => previousSoftmaxValue; }
-        //конструктор
+        //public double PreviousSoftmaxValue { get => previousSoftmaxValue; }
+        // конструктор
         public Neiron(double[] memoryWeights, NeironType typeNeiron, List<Neiron> outputNeiron = null)
         {
             type = typeNeiron;
             weights = memoryWeights;
+            /*
             this.outputNeirons = outputNeiron;
 
             if (typeNeiron == NeironType.Output && outputNeirons != null)
             {
                 outputNeirons.Add(this); // добавляем выходной нейрон в список
             }
+            */
 
         }
 
@@ -47,7 +48,7 @@ namespace MO_31_1_Varfolomeev_NeiroModel.NeiroNet
 
             for (int j = 0; j < inputs.Length; j++) // цикл вычисления индуцированного поля нейрона
             {
-                sum += inputs[j] * weights[j + 1]; // Линейное преобразование входных сигналов 
+                sum += inputs[j] * weights[j + 1]; // линейное преобразование входных сигналов 
             }
 
             switch (type)
@@ -58,11 +59,14 @@ namespace MO_31_1_Varfolomeev_NeiroModel.NeiroNet
                     break;
 
                 case NeironType.Output: // для нейронов выходного слоя
+                    /*
                     previousSoftmaxValue = sum; // сохраняем предыдущее значение
                     if (outputNeirons != null && !flagSoftMax)
                     {
                         ApplySoftmax();
                     }
+                    */
+                    output = Exp(sum);
                     break;
             }
         }
@@ -71,8 +75,10 @@ namespace MO_31_1_Varfolomeev_NeiroModel.NeiroNet
 
         private double HyperbolicTangent(double sum) // для гиперболического тангенса
         {
-            double outputTang = (Exp(sum) - Exp(-sum)) / (Exp(sum) + Exp(-sum)); // tan(x) = (e^x - e^(-x))/(e^x + e^(-x))
-            return outputTang; //возвращаем значение
+            double expon1 = Exp(sum);
+            double expon2 = Exp(-sum);
+            double outputTang = (expon1 - expon2) / (expon1 + expon2); // tan(x) = (e^x - e^(-x))/(e^x + e^(-x))
+            return outputTang; // возвращаем значение
         }
 
 
@@ -89,7 +95,7 @@ namespace MO_31_1_Varfolomeev_NeiroModel.NeiroNet
             return Tanh(sum); //возвращаем значение
         }
         */
-
+        /*
         private void ApplySoftmax()
         {
             if (flagSoftMax) return; // проверка флага
@@ -108,6 +114,7 @@ namespace MO_31_1_Varfolomeev_NeiroModel.NeiroNet
             }
 
         }
+        */
         // Архетектура Моя  15 70 32 10
 
     }

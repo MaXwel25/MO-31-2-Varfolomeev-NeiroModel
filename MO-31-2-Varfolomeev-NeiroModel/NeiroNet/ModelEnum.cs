@@ -1,6 +1,6 @@
 ﻿namespace MO_31_2_Varfolomeev_NeiroModel.NeiroNet
 {
-    enum MemoryMode //режим работы памяти
+    enum MemoryMode // режим работы памяти
     {
         GET, // считывание памяти
         SET, // сохранение памяти
@@ -8,7 +8,7 @@
 
     }
 
-    enum NeironType //тип нейрона
+    enum NeironType // тип нейрона
     {
         Hidden, // скрытый
         Output // выходной
