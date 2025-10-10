@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MO_31_2_Varfolomeev_NeiroModel.NeiroNet
 {
-    internal class Network
+    class Network
     {
     }
 }

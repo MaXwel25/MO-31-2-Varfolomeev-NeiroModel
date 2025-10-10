@@ -13,7 +13,7 @@ namespace MO_31_2_Varfolomeev_NeiroModel.NeiroNet
         private double derivative; // производнаяя
         //private double previousSoftmaxValue; // сохранение суммы до применения softMax
 
-        private double a = 0.01d; // константы для функкции активации
+        //private double a = 0.01d; // константы для функкции активации
 
         //private List<Neiron> outputNeirons;
         //private bool flagSoftMax = false; // флаг для повторных проходов

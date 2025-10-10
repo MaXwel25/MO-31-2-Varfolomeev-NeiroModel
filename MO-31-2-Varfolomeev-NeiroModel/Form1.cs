@@ -14,6 +14,7 @@ namespace MO_31_2_Varfolomeev_NeiroModel
     public partial class Form1 : Form
     {
         private double[] inputPixels;
+        private NeiroNet.HiddenLayer hiddenlayer1;
         public Form1()
         {
             InitializeComponent();
@@ -62,6 +63,11 @@ namespace MO_31_2_Varfolomeev_NeiroModel
             File.AppendAllText(path, tmpStr);
         }
 
-    
+        private void button_TestWeights_Click(object sender, EventArgs e)
+        {
+            hiddenlayer1 = new NeiroNet.HiddenLayer(10, 10, NeiroNet.NeironType.Hidden, nameof(hiddenlayer1));
+        }
+
+
     }
 }

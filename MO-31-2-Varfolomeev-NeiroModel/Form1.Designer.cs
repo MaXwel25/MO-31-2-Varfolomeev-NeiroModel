@@ -46,6 +46,7 @@
             this.numericUpDown_NecessaryOutput = new System.Windows.Forms.NumericUpDown();
             this.SaveTrainSample = new System.Windows.Forms.Button();
             this.SaveTestSample = new System.Windows.Forms.Button();
+            this.button16 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_NecessaryOutput)).BeginInit();
             this.SuspendLayout();
             // 
@@ -256,12 +257,24 @@
             this.SaveTestSample.UseVisualStyleBackColor = true;
             this.SaveTestSample.Click += new System.EventHandler(this.Button_SaveTestSample_Click);
             // 
+            // button16
+            // 
+            this.button16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.button16.Location = new System.Drawing.Point(688, 12);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(100, 34);
+            this.button16.TabIndex = 18;
+            this.button16.Text = "Write";
+            this.button16.UseVisualStyleBackColor = false;
+            this.button16.Click += new System.EventHandler(this.button_TestWeights_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DodgerBlue;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button16);
             this.Controls.Add(this.SaveTestSample);
             this.Controls.Add(this.SaveTrainSample);
             this.Controls.Add(this.numericUpDown_NecessaryOutput);
@@ -307,6 +320,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDown_NecessaryOutput;
         private System.Windows.Forms.Button SaveTrainSample;
         private System.Windows.Forms.Button SaveTestSample;
+        private System.Windows.Forms.Button button16;
     }
 }
 
