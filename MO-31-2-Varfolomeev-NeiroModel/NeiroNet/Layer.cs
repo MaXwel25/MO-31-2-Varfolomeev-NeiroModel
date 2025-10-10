@@ -21,6 +21,7 @@ namespace MO_31_2_Varfolomeev_NeiroModel.NeiroNet
         // свойства
         public Neiron[] Neirons { get => neirons; set => neirons = value; }
 
+        // активация нейрона
         public double[] Data
         {
             set
@@ -77,10 +78,10 @@ namespace MO_31_2_Varfolomeev_NeiroModel.NeiroNet
                 case MemoryMode.GET:
                     tmpStrWeights = File.ReadAllLines(path);
                     string[] memory_elemnt;
-                    for (i=0; i < numofneirons; i++)
+                    for (i = 0; i < numofneirons; i++)
                     {
                         memory_elemnt = tmpStrWeights[i].Split(delim);
-                        for (j=0; j<numofneirons + 1; j++)
+                        for (j = 0; j < numofneirons + 1; j++)
                         {
                             weights[i, j] = double.Parse(memory_elemnt[j].Replace(',', '.'),
                                 System.Globalization.CultureInfo.InvariantCulture);
@@ -108,16 +109,59 @@ namespace MO_31_2_Varfolomeev_NeiroModel.NeiroNet
 
                 case MemoryMode.INIT:
                     Random rand = new Random(); // инициализация случайными весами
-                    for (i = 0; i < numofneirons; i++) // переюор нейронов текущего слоя 
+                    for (i = 0; i < numofneirons; i++) // перебор нейронов текущего слоя 
                     {
                         for (j = 0; j < numofprevneirons + 1; j++) // перебор всех весов для каждого нейрона 
                         {
-                            weights[i, j] = rand.NextDouble() - 0.5; // инициализация в диапазоне [-0.5, 0.5]
+                            weights[i, j] = (rand.NextDouble() * 2) - 1; // инициализация в диапазоне [-1, 1]
                         }
                     }
-                    string initDirectory = Path.GetDirectoryName(path); // ивзлекает путь к папке
-                    //f (!Directory.Exists(initDirectory))
-                    //   Directory.CreateDirectory(initDirectory); // если её нет или не создалась
+                    double sum = 0;
+                    int totalWeights = numofneirons * (numofprevneirons + 1);
+
+                    for (i = 0; i < numofneirons; i++)
+                    {
+                        for (j = 0; j < numofprevneirons + 1; j++)
+                        {
+                            sum += weights[i, j];
+                        }
+                    }
+                    double mean = sum / totalWeights;
+                    // вычитаем среднее из каждого веса
+                    for (i = 0; i < numofneirons; i++)
+                    {
+                        for (j = 0; j < numofprevneirons + 1; j++)
+                        {
+                            weights[i, j] -= mean;
+                        }
+                    }
+                    // стандартизация (приведение к единичной дисперсии)
+                    // вычисляем стандартное отклонение
+                    double sumSquaredDiffs = 0;
+                    for (i = 0; i < numofneirons; i++)
+                    {
+                        for (j = 0; j < numofprevneirons + 1; j++)
+                        {
+                            double diff = weights[i, j];
+                            sumSquaredDiffs += diff * diff;
+                        }
+                    }
+                    double variance = sumSquaredDiffs / totalWeights;
+                    double stdDev = Math.Sqrt(variance);
+
+                    // делим каждый вес на стандартное отклонение (если оно не нулевое)
+                    if (stdDev > double.Epsilon)
+                    {
+                        for (i = 0; i < numofneirons; i++)
+                        {
+                            for (j = 0; j < numofprevneirons + 1; j++)
+                            {
+                                weights[i, j] /= stdDev;
+                            }
+                        }
+                    }
+
+                    string initDirectory = Path.GetDirectoryName(path); // извлекает путь к папке
                     string[] initLinesToWrite = new string[numofneirons]; // массив строк, по одной каждый нейрона
                     for (i = 0; i < numofneirons; i++)
                     {
@@ -131,8 +175,11 @@ namespace MO_31_2_Varfolomeev_NeiroModel.NeiroNet
                     File.WriteAllLines(path, initLinesToWrite); // запись строки весов (один нейрон) в файл
                     break;
             }
-            return weights; // в итоге возвращаем веса
+                 return weights; // в итоге возвращаем веса
         }
+
+
+
 
     }
 }
